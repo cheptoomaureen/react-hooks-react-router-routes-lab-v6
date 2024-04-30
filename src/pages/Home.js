@@ -1,13 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import MovieCard from "../components/MovieCard";
+import NavBar from "../components/NavBar";
 
 function Home() {
+  const [Movie, setMovies] = useState([])
+
+  useEffect(() =>{
+    fetch("http://localhost:3000/movies")
+      .then(r => r.json())
+      .then(data => setMovies(data))
+      .catch(error => console.error(error));
+  }, []);
+  
+  const userList =  Movie.map(user =>{
+    return <MovieCard key={user.id} user={user}/>
+  });
+
   return (
     <>
       <header>
-        {/* What component should go here? */}
+        {<NavBar />}
       </header>
       <main>
-        {/* Info goes here! */}
+        <h1>Home!</h1>
+        {userList}
       </main>
     </>
   );
